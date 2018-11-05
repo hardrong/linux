@@ -133,13 +133,15 @@ Date Date:: operator-(int days){
 {
      Date ret(*this);
       ret += 1;
-      return ret;
+     *this = ret;
+      return *this;
 }
     Date Date::operator--(int)
 {
   Date ret(*this);
   ret -= 1;
-  return ret;
+     *this = ret;
+  return *this;
 }
     bool Date::operator>(const Date&d)
 {
