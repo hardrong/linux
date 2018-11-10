@@ -7,4 +7,4 @@ write:write.cpp
 libadd.so: myadd.cpp
 	g++ -fPIC -shared -o $@ $^
 clean:
-	rm -f write main 
+	rm -f write main myadd.o 
