@@ -30,7 +30,7 @@ namespace my
     }
     Ref operator*()
     {
-      return _node>_data;
+      return _node->_data;
     }
     Ptr operator->()
     {
@@ -42,7 +42,7 @@ namespace my
        return *this; 
     }
     Self &operator--()
-    {
+     {
       _node = _node->_prev;
       return *this;
     }
@@ -60,11 +60,11 @@ namespace my
    }
    bool operator!=(const Self &it)
    {
-     return *this != it;     
+     return _node != it._node;     
    }
    bool operator==(const Self &it)
    {
-     return *this == it;
+     return _node == it._node;
    }
   };
   template <class T>
@@ -158,13 +158,28 @@ namespace my
         }
         return count;
       }
-      void Insert(iterator pos, const T& x)
+      void insert(iterator pos, const T& x)
       {
+          Node * newnode = new Node(x);
+          Node * cur = pos._node;
+          Node * prev = pos._node->_prev;
 
+          newnode->_prev = prev;
+          newnode->_next = cur;
+          prev->_next = newnode;
+          cur->_prev = newnode;
       }
       iterator Erase(iterator pos)
       {
+          Node * prev = pos._node->_prev;
+          Node * next = pos._node->_next;
 
+          prev->_next = next;
+          next->_prev = prev;
+
+          delete pos._node;
+
+          return iterator(next);
       }
   private:
      Node *_head;
